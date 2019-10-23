@@ -62,9 +62,9 @@ BootStrap Jquery  Jqgird
 
 ### 权限管理界面
 
-<div align=center><img width="900" height="600" src="https://github.com/cswangyuhui/forest/blob/master/githubImage/11.png"/></div>
+<div align=center><img width="900" height="600" src="https://github.com/cswangyuhui/forest/blob/master/gitImage/11.png"/></div>
 
 ### 安卓APP部分界面截图
 
-<div align=center><img width="900" height="600" src="https://github.com/cswangyuhui/forest/blob/master/githubImage/app.png"/></div>
+<div align=center><img width="900" height="600" src="https://github.com/cswangyuhui/forest/blob/master/gitImage/app.png"/></div>
 
