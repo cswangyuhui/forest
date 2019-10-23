@@ -58,7 +58,7 @@ BootStrap Jquery  Jqgird
 
 ### 用户管理界面
 
-<div align=center><img width="900" height="600" src=https://github.com/cswangyuhui/forest/blob/master/gitImage/10.png"/></div>
+<div align=center><img width="900" height="600" src="https://github.com/cswangyuhui/forest/blob/master/gitImage/10.png"/></div>
 
 ### 权限管理界面
 
