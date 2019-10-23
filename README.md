@@ -12,7 +12,7 @@ BootStrap Jquery  Jqgird
 
 |文件名|作用|
 |:---|:---|
-|forest.sql｜mysql数据导入脚本|
+|forest.sql|mysql数据导入脚本|
 |system|ssm web工程|
 |app|安卓APP可执行文件|
 
