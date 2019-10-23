@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.forest.mapper.TreeMapper">
+  
+  <resultMap id="TreeResultMap" type="com.forest.pojo.Tree">
+   		  <id column="unique_id" property="uniqueId"/>
+          <result column="history_id" property="historyId"/>
+          <result column="tree_num" property="treeNum"/>
+          <result column="locationX" property="locationX"/>
+          <result column="locationY" property="locationY"/>
+          <result column="is_dead" property="isDead"/>
+          <result column="area" property="area"/>
+          <result column="stand" property="stand"/>
+          <result column="plot" property="plot"/>
+          <result column="tree_type" property="treeType"/>
+  </resultMap>
+  
+  <resultMap id="LiveTreeResultMap" type="com.forest.pojo.GrowthSituation">
+   		  	<id column="unique_id" property="uniqueId"/>
+   		  	<result column="DBH" property="DBH"/>
+	 		<result column="height" property="height"/>
+			<result column="BLC" property="BLC"/>
+	 		<result column="CWe" property="CWe"/>
+			<result column="CWw" property="CWw"/>
+			<result column="CWs" property="CWs"/>
+			<result column="CWn" property="CWn"/>
+			<result column="datetime" property="datetime"/>
+  </resultMap>
+  
+  <resultMap id="DeadTreeResultMap" type="com.forest.pojo.DeadTree">
+   		  	<id column="unique_id" property="uniqueId"/>
+   		  	<result column="note" property="note"/>
+   		  	<result column="datetime" property="datetime"/>
+   		  	<result column="number" property="number"/>
+  </resultMap>
+  
+  <select id="findTree"  resultMap="TreeResultMap" parameterType="Map">
+        select t.unique_id,t.history_id,t.tree_num,t.locationX,t.locationY,
+        t.is_dead,t.area,t.stand,t.plot,t.tree_type from tree t
+        <where>
+       		<if test=" unique_id0 !=null and unique_id0 !='' ">
+       				and unique_id = #{unique_id0}
+       		</if>
+       		<if test=" unique_id1 !=null and unique_id1 !='' ">
+       				and unique_id != #{unique_id1}
+       		</if>
+       		<if test=" tree_num0 !=null and tree_num0 !='' ">
+       				and tree_num = #{tree_num0}
+       		</if>
+       		<if test=" tree_num1 !=null and tree_num1 !='' ">
+       				and tree_num != #{tree_num1}
+       		</if>
+       		<if test=" area0 !=null and area0 !='' ">
+       				and area = #{area0}
+       		</if>
+       		<if test=" area1 !=null and area1 !='' ">
+       				and area != #{area1}
+       		</if>
+       		<if test=" stand0 !=null and stand0 !='' ">
+       				and stand = #{stand0}
+       		</if>
+       		<if test=" stand1 !=null and stand1 !='' ">
+       				and stand != #{stand1}
+       		</if>
+       		<if test=" plot0 !=null and plot0 !='' ">
+       				and plot = #{plot0}
+       		</if>
+       		<if test=" plot1 !=null and plot1 !='' ">
+       				and plot != #{plot1}
+       		</if>
+       		<if test=" is_dead0 !=null and is_dead0 !='' ">
+       				and is_dead = #{is_dead0}
+       		</if>
+       		<if test=" is_dead1 !=null and is_dead1 !='' ">
+       				and is_dead != #{is_dead1}
+       		</if>
+       		<if test=" tree_type0 !=null and tree_type0 !='' ">
+       				and tree_type = #{tree_type0}
+       		</if>
+       		<if test=" tree_type1 !=null and tree_type1 !='' ">
+       				and tree_type != #{tree_type1}
+       		</if>
+        </where>
+        <if test=" start !=null and limit != null ">
+       			limit #{start},#{limit}
+       	</if>
+  </select>
+  
+  <select id="exportTree"  resultMap="TreeResultMap" parameterType="Map">
+        select t.unique_id,t.history_id,t.tree_num,t.locationX,t.locationY,
+        t.is_dead,t.area,t.stand,t.plot,t.tree_type from tree t
+        <where>
+       		<if test=" area != null">
+       				and t.area = #{area}
+       		</if>
+       		<if test=" stand != null">
+       				and t.stand = #{stand}
+       		</if>
+       		<if test=" plot != null">
+       				and t.plot = #{plot}
+       		</if>
+       		<if test=" is_dead != null">
+       				and t.is_dead = #{is_dead}
+       		</if>
+        </where>
+  </select>
+
+  <select id="getTotalTree" parameterType="Map" resultType="int">
+       select count(*) from tree
+        <where>
+       		<if test=" unique_id0 !=null and unique_id0 !='' ">
+       				and unique_id = #{unique_id0}
+       		</if>
+       		<if test=" unique_id1 !=null and unique_id1 !='' ">
+       				and unique_id != #{unique_id1}
+       		</if>
+       		<if test=" tree_num0 !=null and tree_num0 !='' ">
+       				and tree_num = #{tree_num0}
+       		</if>
+       		<if test=" tree_num1 !=null and tree_num1 !='' ">
+       				and tree_num != #{tree_num1}
+       		</if>
+       		<if test=" area0 !=null and area0 !='' ">
+       				and area = #{area0}
+       		</if>
+       		<if test=" area1 !=null and area1 !='' ">
+       				and area != #{area1}
+       		</if>
+       		<if test=" stand0 !=null and stand0 !='' ">
+       				and stand = #{stand0}
+       		</if>
+       		<if test=" stand1 !=null and stand1 !='' ">
+       				and stand != #{stand1}
+       		</if>
+       		<if test=" plot0 !=null and plot0 !='' ">
+       				and plot = #{plot0}
+       		</if>
+       		<if test=" plot1 !=null and plot1 !='' ">
+       				and plot != #{plot1}
+       		</if>
+       		<if test=" is_dead0 !=null and is_dead0 !='' ">
+       				and is_dead = #{is_dead0}
+       		</if>
+       		<if test=" is_dead1 !=null and is_dead1 !='' ">
+       				and is_dead != #{is_dead1}
+       		</if>
+       		<if test=" tree_type0 !=null and tree_type0 !='' ">
+       				and tree_type = #{tree_type0}
+       		</if>
+       		<if test=" tree_type1 !=null and tree_type1 !='' ">
+       				and tree_type != #{tree_type1}
+       		</if>
+        </where>
+  </select>
+  
+  <select id="findLiveTreeByUniqueId" parameterType="String" resultMap="LiveTreeResultMap">
+       select g.unique_id,g.DBH,g.height,g.BLC,g.CWe,g.CWw,g.CWs,g.CWn,g.datetime
+        from growth_situation g where g.unique_id = #{uniqueId,jdbcType=VARCHAR}
+  </select>
+ 	
+  <select id="findDeadTreeByUniqueId" parameterType="String" resultMap="DeadTreeResultMap">
+       select d.unique_id,d.note,d.datetime,d.number
+        from dead_tree d where d.unique_id = #{uniqueId,jdbcType=VARCHAR}
+  </select>
+  
+  <insert id="insertTree" parameterType="com.forest.pojo.Tree">
+        insert into tree(history_id,unique_id,tree_num,locationX,locationY,is_dead,area,
+        stand,plot,tree_type) values(#{historyId},#{uniqueId},#{treeNum},#{locationX},
+        #{locationY},#{isDead},#{area},#{stand},#{plot},#{treeType})
+  </insert>
+  
+  <insert id="insertGrowthSituation" parameterType="com.forest.pojo.GrowthSituation">
+        insert into growth_situation(DBH,height,BLC,CWe,CWw,CWs,CWn,unique_id,datetime) 
+        values(#{DBH},#{height},#{BLC},#{CWe},#{CWw},#{CWs},#{CWn},#{uniqueId},#{datetime})
+  </insert>
+  
+  <insert id="insertDeadTree" parameterType="com.forest.pojo.DeadTree">
+        insert into dead_tree(unique_id,note,datetime,number) values(#{uniqueId},#{note},#{datetime},#{number})
+  </insert>
+  
+  <insert id="insertLiveTreeByExcel">
+        insert into tree(history_id,unique_id,tree_num,locationX,locationY,is_dead,area,
+        stand,plot,tree_type) values
+        <foreach collection="tree" index="index" item="t" open="" separator="," close="">
+        	(#{t.historyId},#{t.uniqueId},#{t.treeNum},#{t.locationX},#{t.locationY},#{t.isDead},#{t.area},#{t.stand},#{t.plot},#{t.treeType})
+        </foreach>;
+        insert into growth_situation(DBH,height,BLC,CWe,CWw,CWs,CWn,unique_id,datetime) values
+        <foreach collection="gs" index="index" item="g" open="" separator="," close="">
+        	(#{g.DBH},#{g.height},#{g.BLC},#{g.CWe},#{g.CWw},#{g.CWs},#{g.CWn},#{g.uniqueId},#{g.datetime})
+        </foreach>
+  </insert>
+  <insert id="insertDeadTreeByExcel">
+        insert into tree(history_id,unique_id,tree_num,locationX,locationY,is_dead,area,
+        stand,plot,tree_type) values
+        <foreach collection="tree" index="index" item="t" open="" separator="," close="">
+        	(#{t.historyId},#{t.uniqueId},#{t.treeNum},#{t.locationX},#{t.locationY},#{t.isDead},#{t.area},#{t.stand},#{t.plot},#{t.treeType})
+        </foreach>;
+        insert into dead_tree(unique_id,note,datetime,number) values
+        <foreach collection="dt" index="index" item="d" open="" separator="," close="">
+        	(#{d.uniqueId},#{d.note},#{d.datetime},#{d.number})
+        </foreach>
+  </insert>
+  
+  <delete id="deleteLiveTree" parameterType="String">
+  		delete from growth_situation where unique_id = #{uniqueId,jdbcType=VARCHAR};
+  		delete from tree where unique_id = #{uniqueId,jdbcType=VARCHAR};
+  </delete>
+  
+  <delete id="deleteDeadTree" parameterType="String">
+  		delete from dead_tree where unique_id = #{uniqueId,jdbcType=VARCHAR};
+  		delete from tree where unique_id = #{uniqueId,jdbcType=VARCHAR};
+  </delete>
+  
+  <update id="updateLiveTree">
+  		update growth_situation set DBH = #{gs.DBH},height = #{gs.height},BLC = #{gs.BLC},CWe = #{gs.CWe},CWw = #{gs.CWw},
+  		CWs = #{gs.CWs},CWn = #{gs.CWn},datetime = #{gs.datetime} where unique_id = #{gs.uniqueId};
+  		update tree set history_id = #{tree.historyId},tree_num = #{tree.treeNum},locationX = #{tree.locationX},
+  		locationY = #{tree.locationY},is_dead = #{tree.isDead},area = #{tree.area},stand = #{tree.stand},plot = #{tree.plot},
+  		tree_type = #{tree.treeType} where unique_id = #{tree.uniqueId}
+  </update>
+  
+  <update id="updateDeadTree">
+  		update dead_tree set note = #{dt.note},datetime = #{dt.datetime},number = #{dt.number} where unique_id = #{dt.uniqueId};
+  		update tree set history_id = #{tree.historyId},tree_num = #{tree.treeNum},locationX = #{tree.locationX},
+  		locationY = #{tree.locationY},is_dead = #{tree.isDead},area = #{tree.area},stand = #{tree.stand},plot = #{tree.plot},
+  		tree_type = #{tree.treeType} where unique_id = #{tree.uniqueId}
+  </update>
+</mapper>

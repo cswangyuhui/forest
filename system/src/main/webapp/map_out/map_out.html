@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <link rel="stylesheet" type="text/css" href="../bootstrap-3.3.7-dist/css/bootstrap.min.css" />
+    <link rel="stylesheet " type="text/css " href="../css/toastr.min.css">
+    <link rel="stylesheet" type="text/css" href="../boot_css/bootstrap-table.css">
+    <link rel="stylesheet" type="text/css" href="../fileinput/fileinput.min.css">
+    <script type="text/javascript" src="http://webapi.amap.com/maps?v=1.4.7&key=7562f56fdef831a586f8228bead5ea90"></script>
+    <!--<script src="map_out.js" type="text/javascript"></script>-->
+    <title>样地地图</title>
+    <style type="text/css">
+        .navbar-inverse{height: 80px}
+    </style>
+</head>
+<body>
+<!--导航部分-->
+<div class="navbar navbar-inverse">
+    <div class="container">
+        <div class="navbar-header">
+            <div class="navbar-brand" style="font-size: 35px;vertical-align: center;line-height: 50px;color: white">
+                <!--<small class="glyphicon glyphicon-fire"></small>-->
+                <img src="../img/图标1.png" style="height: 55px;width: 55px;position: relative;right: 68px" >
+                <span style="position: relative;bottom: 50px">实验样地树木管理系统</span>
+            </div>
+        </div>
+        <ul class="nav navbar-nav nav-stacked navbar-right" style="position: relative;top: 20px;font-size: 22px">
+            <li>
+                <a href="#" data-toggle="dropdown">
+                    <small>Welcome</small>
+                    <span id="username"></span>
+                    <span class="caret"></span>
+                </a>
+                <ul class="nav nav-pills nav-stacked dropdown-menu">
+                    <li class="active">
+                        <a href="#" id="user_role">
+                            <span class="glyphicon glyphicon-user"></span>  角色
+                            <span id="rolenameInBar"></span>
+                        </a>
+                    </li>
+                    <li class="divider"></li>
+                    <li>
+                        <a href="#" id="change_password">
+                            <span class="glyphicon glyphicon-cog"></span>  修改密码
+                        </a>
+                    </li>
+                    <li class="divider"></li>
+                    <li>
+                        <a href="#" id="sign_out">
+                            <span class="glyphicon glyphicon-off"></span>  退出登录
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<!-- 页面部分 -->
+<div class="row" style="margin-left: 10px">
+    <div class="col-sm-2">
+
+        <div class="panel-group" id="box">
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <a href="#collapseA" data-parent="#box" data-toggle="collapse" class="panel-title">树木信息管理</a>
+                </div>
+                <div class="panel-collapse collapse" id="collapseA">
+                    <div class="panel-body">
+                        <ul class="nav nav-pills nav-stacked">
+                            <li><a href="../tree_input/tree_input.html">树木信息录入</a></li>
+                            <!--<li><a href="../tree_search/tree_search.html">树木信息查询</a></li>-->
+                            <li><a href="../t_area_input/t_area_input.html">样地信息录入</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <a href="#collapseB" data-parent="#box" data-toggle="collapse" class="panel-title">地图</a>
+                </div>
+                <div class="panel-collapse collapse in" id="collapseB">
+                    <div class="panel-body">
+                        <ul class="nav nav-pills nav-stacked">
+                            <li><a href="../map_in/map_in.html">样地内地图</a></li>
+                            <li><a href="../map_out/map_out.html">样地地图</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <a href="#collapseC" data-parent="#box" data-toggle="collapse" class="panel-title">系统管理</a>
+                </div>
+                <div class="panel-collapse collapse" id="collapseC">
+                    <div class="panel-body">
+                        <ul class="nav nav-pills nav-stacked">
+                            <li><a href="../manage_group/manage_group.html">分组管理</a></li>
+                            <li><a href="../manage_user/manage_user.html">用户管理</a></li>
+                            <li><a href="../manage_authority/manage_authority.html">权限管理</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <a href="../app_download/app_download.html" class="panel-title">二维码下载APP</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="col-sm-10">
+        <div class="bread-crumb">
+            <ul class="breadcrumb">
+                <li><span class="glyphicon glyphicon-home"></span><a href="../home/forest_total.html">&nbsp;&nbsp;首页</a></li>
+                <li><a href="#">地图</a></li>
+                <li><a href="map_out.html">样地地图</a></li>
+            </ul>
+        </div>
+        <div class="panle panel-success">
+            <div class="panel-heading">
+                <a class="panel-title" href="map_out.html">样地地图</a>
+            </div>
+        </div>
+        <div class="panel-body" style="padding-bottom:0px;" >
+            <div id="container" style="height: 500px;"></div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<!-更改密码-->
+<div class="modal fade" id="myModal_changepassword" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                <h4 class="modal-title" id="myModalLabel_changepassword">更改密码</h4>
+            </div>
+            <div class="modal-body">
+
+                <div class="form-group">
+                    <label for="txt_oldpassword">旧密码</label>
+                    <input type="password" name="txt_oldpassword" class="form-control" id="txt_oldpassword" placeholder="旧密码">
+                </div>
+                <div class="form-group">
+                    <label for="txt_newpassword">新密码</label>
+                    <input type="password" name="txt_newpassword" class="form-control" id="txt_newpassword" placeholder="新密码">
+                </div>
+                <div class="form-group">
+                    <label for="txt_confirmpassword">确认新密码</label>
+                    <input type="password" name="txt_confirmpassword" class="form-control" id="txt_confirmpassword" placeholder="确认新密码">
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>关闭</button>
+            <button type="button" id="btn_newpassword" class="btn btn-primary" data-dismiss="modal"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>保存</button>
+        </div>
+    </div>
+</div>
+
+<script src="../boot_js/jquery-3.3.1.min.js" type="text/javascript"></script>
+    <script src="../bootstrap-3.3.7-dist/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="../boot_js/bootstrap-table.js" type="text/javascript"></script>
+    <script src="../boot_js/bootstrap-table-export.min.js" type="text/javascript"></script>
+    <script src="../boot_js/bootstrap-table-zh-CN.min.js" type="text/javascript"></script>
+    <script src="../js/toastr.min.js" type="text/javascript"></script>
+    <script src="../fileinput/fileinput.min.js" type="text/javascript"></script>
+    <script src="../fileinput/zh.js" type="text/javascript"></script>
+    <script src="../js/js_total.js" type="text/javascript"></script>
+    <script src="../echart_js/echarts.js" type="text/javascript"></script>
+    <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-gl/echarts-gl.min.js"></script>
+	<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-stat/ecStat.min.js"></script>
+	<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/dataTool.min.js"></script>
+	<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/china.js"></script>
+	<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/world.js"></script>
+	<script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=8F8SGADZlp1AP11UdhbOVMVsrcOaLa5v"></script>
+	<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/bmap.min.js"></script>
+<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/simplex.js"></script>
+	<script src="map_out.js" type="text/javascript"></script>
+</body>
+</html>

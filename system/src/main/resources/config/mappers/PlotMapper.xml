@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.forest.mapper.PlotMapper">
+
+<resultMap id="PlotResultMap" type="com.forest.pojo.Plot">
+          <result column="area" property="area"/>
+          <result column="stand" property="stand"/>
+          <result column="plot" property="plot"/>
+          <result column="x_axis" property="xAxis"/>
+          <result column="y_axis" property="yAxis"/>
+          <result column="shape" property="shape"/>
+          <result column="longitude" property="longitude"/>
+          <result column="latitude" property="latitude"/>
+</resultMap>
+
+<select id="findPlot"  resultMap="PlotResultMap" parameterType="Map">
+        select area,stand,plot,x_axis,y_axis,shape,longitude,latitude from sample_plot
+        <if test="area != null and stand != null and plot != null">where area =  #{area} and stand =  #{stand} and plot =  #{plot}</if>
+        <if test="limit != null and start != null">limit #{start},#{limit}</if>
+</select>
+
+<select id="getTotalPlot" resultType="int">
+       select count(*) from sample_plot
+</select>
+
+  <select id="selectArea" resultType="String">
+        select distinct area from sample_plot
+  </select>
+  
+  <select id="selectStand" resultType="String">
+        select distinct stand from sample_plot
+  </select>
+  
+  <select id="selectPlot" resultType="String">
+        select distinct plot from sample_plot
+  </select>
+  
+  <insert id="insertPlot" parameterType="com.forest.pojo.Plot">
+        insert into sample_plot(area,stand,plot,x_axis,y_axis,shape,longitude,latitude) 
+        values(#{area},#{stand},#{plot},#{xAxis},#{yAxis},#{shape},#{longitude},#{latitude})
+  </insert>
+  
+  <update id="updatePlot" parameterType="com.forest.pojo.Plot">
+        update sample_plot
+        <trim prefix="set" suffixOverrides="," suffix=" where area = #{area} and stand = #{stand} and plot=#{plot}">
+        <if test="#{xAxis} != null"> x_axis=#{xAxis} ,  </if>
+        <if test="#{yAxis} != null"> y_axis=#{yAxis} ,  </if>
+        <if test="#{shape} != null"> shape=#{shape} ,  </if>
+        <if test="#{longitude} != null"> longitude=#{longitude} ,  </if>
+        <if test="#{latitude} != null"> latitude=#{latitude} ,  </if>
+        </trim> 
+  </update>
+  
+  <delete id="deletePlot">
+  		delete from sample_plot where area = #{area} and stand = #{stand} and plot=#{plot}
+  </delete>
+</mapper>

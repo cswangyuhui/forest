@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.forest.mapper.GroupMapper">
+
+<resultMap id="GroupResultMap" type="com.forest.pojo.Group">
+          <result column="team_leader_number" property="teamLeaderNumber"/>
+          <result column="team_name" property="teamName"/>
+          <result column="leader_name" property="leaderName"/>
+          <result column="leader_role" property="leaderRole"/>
+</resultMap>
+
+<resultMap id="UserInfResultMap" type="com.forest.pojo.User">
+  	<id column="email" jdbcType="VARCHAR" property="email" />
+  	<result column="name" jdbcType="VARCHAR" property="name" />
+  	<result column="role" jdbcType="VARCHAR" property="role" />
+  </resultMap>
+
+<select id="findGroup"  resultMap="GroupResultMap" parameterType="Map">
+        select team_leader_number,team_name,leader_name,leader_role from group_table
+        <if test="name != null">where team_name = #{name}</if>
+        <if test="email != null">where team_leader_number = #{email}</if>
+        <if test="limit != null and start != null">limit #{start},#{limit}</if>
+</select>
+
+<select id="getTotalGroup" resultType="int">
+       select count(*) from group_table
+</select>
+
+<select id="findLeaderNumber" resultType="String">
+		select leader from leader_member where member = #{member}
+</select>
+
+<select id="getMembersOfGroup" parameterType="String" resultMap="UserInfResultMap">
+       select email,name,role from user,leader_member where leader_member.leader = #{email}
+        and leader_member.member = user.email
+</select>
+<insert id="addGroup">
+	   insert into group_table(team_leader_number,team_name,leader_name,leader_role) 
+	   values(#{email},#{name},#{username},#{role})
+</insert>
+<insert id="addMember">
+	   insert into leader_member(leader,member)
+	   values(#{leader},#{member})
+</insert>
+<delete id="deleteGroup">
+		delete from group_table where team_leader_number = #{email}
+</delete>
+<delete id="deleteMember">
+		delete from leader_member where leader = #{leader} and member = #{member}
+</delete>
+<delete id="clearMembers">
+		delete from leader_member where leader = #{email}
+</delete>
+</mapper>

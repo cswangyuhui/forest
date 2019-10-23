@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+        
+	<!-- mybatis整合 -->
+	<!-- 数据源 -->
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+	   	<property name="driverClass" value="com.mysql.jdbc.Driver"></property>
+	   	<property name="jdbcUrl" value="jdbc:mysql://mysql数据库IP:3306/forest_2.0?allowMultiQueries=true"></property>
+	   	<property name="user" value="root"></property>
+	   	<property name="password" value="forest"></property>
+	   	<property name="testConnectionOnCheckin" value="false"/>
+    	<property name="testConnectionOnCheckout" value="true"/>
+   </bean>
+   
+   <!-- 会话工厂 必须使用MyBatis-spring整合jar包中的工厂bean。 -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<!-- 加载本地的MyBatis配置文件。为了加载pagehelper插件。 -->
+		<property name="configLocation" value="classpath:config/mybatis/mybatis-config.xml"></property>
+		<property name="dataSource" ref="dataSource"></property>
+		<!-- 本地映射。非必要。 -->
+		<property name="mapperLocations" value="classpath:config/mappers/*.xml"></property>
+	</bean>
+	
+	<!-- Mapper工厂 -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
+		<property name="basePackage" value="com.forest.mapper"></property>
+	</bean>
+
+	<!-- 扫描Compoent代码 -->
+	<context:component-scan base-package="com.forest.pojo" />
+        
+</beans>

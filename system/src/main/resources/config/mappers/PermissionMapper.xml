@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.forest.mapper.PermissionMapper">
+
+<resultMap id="PermissionResultMap" type="com.forest.pojo.Permission">
+          <result column="permission" property="permission"/>
+          <result column="role" property="role"/>
+</resultMap>
+
+<select id="getAllPermissions"  resultMap="PermissionResultMap">
+        select permission,role from permission_of_role
+</select>
+
+<select id="getPermissionOfRole" resultType="String">
+	select permission from permission_of_role where role = #{role}
+</select>
+
+<select id="initPermissions"  resultMap="PermissionResultMap">
+        select permission,role from permission_of_role_bak
+</select>
+
+<delete id="deletePermission">
+  		delete from permission_of_role where role = #{role} and permission = #{permission}
+</delete>
+
+<delete id="clearPermission">
+  		delete from permission_of_role
+</delete>
+
+<insert id="insertPermission">
+		insert into permission_of_role(role,permission) values(#{role},#{permission})
+</insert>
+
+<insert id="insertForeach" parameterType="java.util.List" useGeneratedKeys="false">
+		insert into permission_of_role(role,permission)
+		values
+		<foreach collection="list" item="item" index="index" separator=",">
+			(
+				#{item.role},
+				#{item.permission}
+			)
+	     </foreach>
+</insert>
+
+</mapper>
